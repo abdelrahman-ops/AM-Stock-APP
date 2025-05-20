@@ -1,12 +1,30 @@
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
-import "chartjs-adapter-date-fns";
-import type {
-  ChartOptions,
-  TooltipItem
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  Filler,
+  type ChartOptions,  // Note the 'type' keyword
+  type TooltipItem
 } from "chart.js";
+import "chartjs-adapter-date-fns";
 import { FiArrowUpRight } from "react-icons/fi";
 
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 interface Exchange {
   name: string;
@@ -60,6 +78,7 @@ const StockDashboard = () => {
   const chartData = {
     labels: ["10 am", "10:30 am", "11 am", "11:30 am", "12 pm"],
     datasets: [{
+      label: selectedExchange.name,
       data: selectedExchange.data,
       borderColor: selectedExchange.color,
       backgroundColor: `${selectedExchange.color}20`,
@@ -106,7 +125,7 @@ const StockDashboard = () => {
         displayColors: false,
         callbacks: {
           label: (context: TooltipItem<"line">) => {
-            return `${selectedExchange.name}: ${context.parsed.y.toLocaleString()}`;
+            return `${context.dataset.label}: ${context.parsed.y.toLocaleString()}`;
           }
         }
       }
