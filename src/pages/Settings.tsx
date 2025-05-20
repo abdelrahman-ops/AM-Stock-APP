@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 
 export default function Settings() {
   // User data and handlers
   const [user, setUser] = useState({ name: "", email: "" });
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUser((prev) => ({ ...prev, name: e.target.value }));
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUser((prev) => ({ ...prev, email: e.target.value }));
   };
 
@@ -17,7 +18,7 @@ export default function Settings() {
     alert("Logged out!");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // Implement save logic here
     alert("Changes saved!");

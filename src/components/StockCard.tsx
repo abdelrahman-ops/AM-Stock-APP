@@ -1,4 +1,4 @@
-import React from 'react';
+
 import type { StockItem } from '../types/stock';
 
 const cardThemes = [
