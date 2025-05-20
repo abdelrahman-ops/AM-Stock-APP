@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
-import { Chart as ChartJS, registerables } from "chart.js";
-import { FiChevronDown, FiInfo, FiArrowUpRight } from "react-icons/fi";
-ChartJS.register(...registerables);
+import type {
+  ChartOptions,
+  TooltipItem
+} from "chart.js";
+import { FiArrowUpRight } from "react-icons/fi";
 
-const exchanges = [
+
+interface Exchange {
+  name: string;
+  color: string;
+  data: number[];
+  times: Array<{
+    label: string;
+    progress: number;
+  }>;
+}
+
+const exchanges: Exchange[] = [
   {
     name: "NASDAQ",
     color: "#7F56D9", // Purple
@@ -41,8 +54,8 @@ const exchanges = [
 const timeframes = ["1D", "1W", "1M", "3M", "1Y"];
 
 const StockDashboard = () => {
-  const [selectedExchange, setSelectedExchange] = useState(exchanges[0]);
-  const [selectedTimeframe, setSelectedTimeframe] = useState(timeframes[0]);
+  const [selectedExchange, setSelectedExchange] = useState<Exchange>(exchanges[0]);
+  const [selectedTimeframe, setSelectedTimeframe] = useState<string>(timeframes[0]);
 
   const chartData = {
     labels: ["10 am", "10:30 am", "11 am", "11:30 am", "12 pm"],
@@ -58,7 +71,7 @@ const StockDashboard = () => {
     }]
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<"line"> = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -70,7 +83,12 @@ const StockDashboard = () => {
         grid: { color: "#F2F4F7" },
         ticks: { 
           color: "#667085",
-          callback: (value) => value.toLocaleString()
+          callback: (value: number | string) => {
+            if (typeof value === 'number') {
+              return value.toLocaleString();
+            }
+            return value;
+          }
         }
       }
     },
@@ -87,16 +105,18 @@ const StockDashboard = () => {
         padding: 12,
         displayColors: false,
         callbacks: {
-          label: (context) => `${selectedExchange.name}: ${context.parsed.y.toLocaleString()}`
+          label: (context: TooltipItem<"line">) => {
+            return `${selectedExchange.name}: ${context.parsed.y.toLocaleString()}`;
+          }
         }
       }
     }
   };
 
   const stats = [
-    { label: "High", value: "11,691.89" },
-    { label: "Low", value: "11,470.47" },
-    { label: "Volume", value: "2.4M" },
+    { label: "High", value: "11,691.89", isPositive: false },
+    { label: "Low", value: "11,470.47", isPositive: false },
+    { label: "Volume", value: "2.4M", isPositive: false },
     { label: "Change", value: "+1.53%", isPositive: true }
   ];
 

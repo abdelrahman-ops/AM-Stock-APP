@@ -1,8 +1,26 @@
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+type Stock = {
+  name: string;
+  price: number;
+};
 
 export default function StockDetail() {
   const { stockId } = useParams();
+  const [stock, setStock] = useState<Stock>({ name: '', price: 0 });
+
   // Fetch detailed stock data based on stockId
+  useEffect(() => {
+    // Placeholder fetch logic; replace with real API call
+    if (stockId) {
+      // Simulate fetching stock data
+      setStock({
+        name: `Stock ${stockId}`,
+        price: 100 + Number(stockId),
+      });
+    }
+  }, [stockId]);
   
   return (
     <div>

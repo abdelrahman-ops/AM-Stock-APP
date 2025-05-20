@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
-
+import { stocks } from "../data/stocks"; 
 export default function ExploreStocks() {
+  function addToWishlist(id: number): void {
+    // For now, just show a simple alert. In a real app, you might update state or make an API call.
+    alert(`Stock with ID ${id} added to wishlist!`);
+  }
+
   // Fetch stocks data here
   
   return (
@@ -11,7 +16,7 @@ export default function ExploreStocks() {
         {/* Map through stocks */}
         {stocks.map(stock => (
           <div key={stock.id} className="border p-4 rounded-lg">
-            <h3 className="font-bold">{stock.name}</h3>
+            <h3 className="font-bold">{stock.companyName}</h3>
             <p>Price: ${stock.price}</p>
             <div className="flex gap-2 mt-3">
               <Link 

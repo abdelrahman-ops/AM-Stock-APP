@@ -1,11 +1,33 @@
+import React, { useState } from "react";
+
 export default function Settings() {
   // User data and handlers
+  const [user, setUser] = useState({ name: "", email: "" });
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser((prev) => ({ ...prev, name: e.target.value }));
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser((prev) => ({ ...prev, email: e.target.value }));
+  };
+
+  const handleLogout = () => {
+    // Implement logout logic here
+    alert("Logged out!");
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Implement save logic here
+    alert("Changes saved!");
+  };
   
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Account Settings</h1>
       
-      <form className="max-w-md">
+      <form className="max-w-md" onSubmit={handleSubmit}>
         <div className="mb-4">
           <label>Name</label>
           <input type="text" value={user.name} onChange={handleNameChange} />

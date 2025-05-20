@@ -1,13 +1,13 @@
 import Button from '../../ui/common/Button';
 import { stocks } from '../../data/stocks';
-import { ArrowUpRight, TrendingUp, TrendingDown, ChevronRight } from 'lucide-react';
+import { TrendingUp, TrendingDown, ChevronRight } from 'lucide-react';
 import { SiTesla } from "react-icons/si";
 
 const PortfolioSummary = () => {
   const topStock = stocks[2];
   const isPositive = topStock.change >= 0;
   const portfolioGrowth = 5.63;
-  const previousPrice = topStock.price / (1 + topStock.change/100);
+  // const previousPrice = topStock.price / (1 + topStock.change/100);
 
   // Mock portfolio history data
   const portfolioHistory = [12000, 12500, 13000, 13200, 13500, 14032];

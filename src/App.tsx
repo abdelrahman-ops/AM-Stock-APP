@@ -18,7 +18,7 @@ function App() {
         <div className="flex flex-col h-screen">
         <Navbar 
             sidebarExpanded={sidebarExpanded} 
-            onToggleSidebar={() => setSidebarExpanded(!sidebarExpanded)} 
+            // onToggleSidebar={() => setSidebarExpanded(!sidebarExpanded)} 
         />
             <div className="flex flex-1 overflow-hidden pt-16">
                 <Sidebar 

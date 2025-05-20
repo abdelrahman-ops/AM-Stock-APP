@@ -1,5 +1,25 @@
 export default function Portfolio() {
   // Fetch portfolio data
+  // Example mock data for demonstration
+  const portfolio = [
+    {
+      stock: { id: 1, name: "AAPL" },
+      shares: 10,
+      avgPrice: 150,
+      currentValue: 1700,
+    },
+    {
+      stock: { id: 2, name: "GOOGL" },
+      shares: 5,
+      avgPrice: 1200,
+      currentValue: 6500,
+    },
+  ];
+
+  // Dummy sellStock function
+  const sellStock = (stockId: number) => {
+    alert(`Sell stock with id: ${stockId}`);
+  };
   
   return (
     <div>

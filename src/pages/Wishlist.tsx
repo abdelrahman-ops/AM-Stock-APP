@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Wishlist() {
   // Fetch wishlist data
+  const wishlist: { id: number; name: string; price: number }[] = [];
   
   return (
     <div>

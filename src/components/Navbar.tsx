@@ -6,10 +6,10 @@ import { useState } from 'react';
 
 interface NavbarProps {
   sidebarExpanded: boolean;
-  onToggleSidebar: () => void;
+  // onToggleSidebar: () => void;
 }
 
-const Navbar = ({ sidebarExpanded, onToggleSidebar }: NavbarProps) => {
+const Navbar = ({ sidebarExpanded }: NavbarProps) => {
   const username = "John"; // Replace with actual user data
   const [searchExpanded, setSearchExpanded] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
