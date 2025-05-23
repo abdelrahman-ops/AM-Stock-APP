@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# AMStock 📈
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack stock market simulation platform inspired by Thndr.  
+Built to explore real-time trading logic, user dashboards, and portfolio tracking using modern frontend + backend tools.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Why I Built This
 
-## Expanding the ESLint configuration
+As someone passionate about fintech and clean system design, I wanted to recreate the core features of modern stock trading apps like **Thndr** to better understand their architecture and frontend dynamics. This project is still evolving and acts as both a **learning tool** and a **portfolio project**.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🔧 Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Frontend:** React.js, TypeScript, Tailwind CSS, Zustand, React Router
+- **Backend (Planned):** Node.js, PostgreSQL, REST APIs, JWT Auth
+- **Charting:** Chart.js or Recharts (TBD)
+- **State Management:** Zustand
+- **Version Control & CI:** GitHub, Prettier, ESLint
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 📊 Features
+
+✅ Admin dashboard with:
+- Realtime balance tracking  
+- Stock cards with dynamic values  
+- User portfolio view  
+
+🛠️ Coming Soon:
+- Buy/sell stock simulation  
+- Demo trading with virtual EGP balance  
+- PostgreSQL transaction handling  
+- Portfolio gain/loss tracking  
+- Mobile-responsive UI  
+
+---
+
+## 🧠 Roadmap
+
+- [x] Admin dashboard UI  
+- [x] Real-time state management  
+- [ ] Backend trade logic (PostgreSQL + Node)  
+- [ ] Public user dashboard  
+- [ ] Authentication flow (JWT)  
+- [ ] Visualize trade history  
+
+---
+
+## 📎 Links
+
+🔗 [Live Demo](https://am-stock-app.vercel.app/)
+🔗 [GitHub Repository](https://github.com/abdelrahman-ops/amstock)
+
+---
+
+## 🙋‍♂️ About Me
+
+I'm **Abdelrahman Ataa**, a full-stack developer and 3x hackathon winner currently building projects at the intersection of fintech and real-world problem solving.  
+Check out my [portfolio](https://abdelrahman-ataa.vercel.app) or connect with me on [LinkedIn](https://linkedin.com/in/abdelrahman-ataa-b557b8219).
+
