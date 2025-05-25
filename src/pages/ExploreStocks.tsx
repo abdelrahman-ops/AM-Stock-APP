@@ -1,40 +1,119 @@
-import { Link } from "react-router-dom";
-import { stocks } from "../data/stocks"; 
-export default function ExploreStocks() {
-  function addToWishlist(id: number): void {
-    // For now, just show a simple alert. In a real app, you might update state or make an API call.
-    alert(`Stock with ID ${id} added to wishlist!`);
-  }
+// src/pages/ExploreStocks.tsx
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { FiTrendingUp } from "react-icons/fi";
+import { BsCollection } from "react-icons/bs";
 
-  // Fetch stocks data here
-  
-  return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">All Stocks</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {/* Map through stocks */}
-        {stocks.map(stock => (
-          <div key={stock.id} className="border p-4 rounded-lg">
-            <h3 className="font-bold">{stock.companyName}</h3>
-            <p>Price: ${stock.price}</p>
-            <div className="flex gap-2 mt-3">
-              <Link 
-                to={`/buy/${stock.id}`}
-                className="bg-blue-600 text-white px-3 py-1 rounded text-sm"
-              >
-                Buy
-              </Link>
-              <button 
-                onClick={() => addToWishlist(stock.id)}
-                className="border px-3 py-1 rounded text-sm"
-              >
-                Wishlist
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+import { fetchStocks } from "../services/stockAPI";
+import type { Stock } from "../types/stock";
+
+import SectionHeader from "../components/Explore/SectionHeader";
+import { MarketHeader } from "../components/Explore/MarketHeader";
+import TrendingStockCard from "../components/Explore/TrendingStockCard";
+import { FilterTabs } from "../components/Explore/FilterTabs";
+import MarketOverviewCards from "../components/Explore/MarketOverviewCards";
+import StocksDisplay from "../components/Explore/StocksDisplay";
+
+import { LoadingSpinner } from "../ui/common/LoadingSpinner";
+import NoDataDisplay from "../ui/common/NoDataDisplay";
+import ErrorDisplay from "../ui/common/ErrorDisplay";
+
+export default function ExploreStocks() {
+    const [viewMode, setViewMode] = useState<'cards' | 'table'>('cards');
+    const [activeFilter, setActiveFilter] = useState('all');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const { data: stocks = [], isLoading, error } = useQuery<Stock[]>({
+        queryKey: ['egyptian-stocks'],
+        queryFn: fetchStocks,
+        refetchInterval: 60_000,
+    });
+
+    // Filter and transform data
+    const filteredStocks = stocks.filter(stock => {
+        if (activeFilter === 'gainers') return stock.percentChange > 0;
+        if (activeFilter === 'losers') return stock.percentChange < 0;
+        if (activeFilter === 'active') return stock.volume > 1000000;
+        if (searchQuery) {
+            return stock.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                stock.symbol.toLowerCase().includes(searchQuery.toLowerCase());
+        }
+        return true;
+    });
+
+    const handleAddToWatchlist = (symbol: string) => {
+        console.log(`Added ${symbol} to watchlist`);
+    };
+
+    if (isLoading) return <LoadingSpinner />;
+    if (error) return <ErrorDisplay error={error} />;
+    if (stocks.length === 0) return <NoDataDisplay />;
+
+    return (
+        <div className="container mx-auto px-4 py-8">
+            <MarketHeader 
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                viewMode={viewMode}
+                onViewModeChange={setViewMode}
+            />
+
+            <MarketOverviewCards stocks={stocks} />
+
+            <SectionHeader 
+                icon={<FiTrendingUp className="text-blue-500" />}
+                title="Trending Stocks"
+                subtitle="Most actively traded stocks today"
+            />
+            
+            <TrendingStocksSection 
+                stocks={stocks}
+                onWatchlistAdd={handleAddToWatchlist}
+            />
+
+            <FilterTabs 
+                activeFilter={activeFilter}
+                setActiveFilter={setActiveFilter}
+            />
+
+            <SectionHeader 
+                icon={<BsCollection className="text-blue-500"/>}
+                title={viewMode === 'cards' ? 'All Stocks' : 'Stock Market Table'} 
+                subtitle={`Showing ${filteredStocks.length} stocks`}
+            />
+
+            <StocksDisplay 
+                viewMode={viewMode}
+                stocks={filteredStocks}
+                onWatchlistAdd={handleAddToWatchlist}
+            />
+        </div>
+    );
+}
+
+    // Helper component for trending stocks section
+    function TrendingStocksSection({ stocks, onWatchlistAdd }: { stocks: Stock[], onWatchlistAdd: (symbol: string) => void }) {
+    const trendingStocks = [...stocks]
+        .sort((a, b) => b.volume - a.volume)
+        .slice(0, 3);
+
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {trendingStocks.map((stock, index) => (
+                <motion.div
+                    key={stock._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                >
+                    <TrendingStockCard 
+                        stock={stock} 
+                        rank={index + 1}
+                        onWatchlistAdd={onWatchlistAdd}
+                    />
+                </motion.div>
+            ))}
+        </div>
+    );
 }

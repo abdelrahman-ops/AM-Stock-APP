@@ -1,11 +1,15 @@
 import { NavLink, Link } from 'react-router-dom';
+import { useState } from 'react';
+
 import { 
-    TbUserSquareRounded, TbSearch, TbLayoutDashboardFilled, 
+    TbUserSquareRounded, TbLayoutDashboardFilled, 
     TbSettings2, TbLogout, TbChevronRight 
 } from "react-icons/tb";
 import { RiStockLine, RiAdminLine } from "react-icons/ri";
-import { GrFavorite } from "react-icons/gr";
-import { useState } from 'react';
+import { BiHomeSmile, BiWallet  } from "react-icons/bi";
+import { TiHeartOutline } from "react-icons/ti";
+import { useWatchlist } from '../context/WatchlistContext';
+
 
 interface SidebarProps {
     expanded: boolean;
@@ -14,6 +18,8 @@ interface SidebarProps {
 
 const Sidebar = ({ expanded, onToggle }: SidebarProps) => {
     const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+
+    const { watchlistCount } = useWatchlist();
 
     const toggleSubmenu = (menu: string) => {
         setActiveSubmenu(activeSubmenu === menu ? null : menu);
@@ -26,14 +32,14 @@ const Sidebar = ({ expanded, onToggle }: SidebarProps) => {
                 <div className="flex items-center justify-between mb-8 px-2">
                     {expanded ? (
                         <Link to="/" className="flex items-center">
-                        <span className='text-2xl font-bold text-blue-800'>A</span>
-                        <span className='text-2xl font-bold text-red-800'>M</span>
-                        <span className="text-2xl font-bold text-gray-800">Stock</span>
+                            <span className='text-2xl font-bold text-blue-800'>A</span>
+                            <span className='text-2xl font-bold text-red-800'>M</span>
+                            <span className="text-2xl font-bold text-gray-800">Stock</span>
                         </Link>
                     ) : (
                         <Link to="/" className="flex items-center justify-center w-full">
-                        <span className='text-2xl font-bold text-blue-800'>A</span>
-                        <span className='text-2xl font-bold text-red-800'>M</span>
+                            <span className='text-2xl font-bold text-blue-800'>A</span>
+                            <span className='text-2xl font-bold text-red-800'>M</span>
                         </Link>
                     )}
                     <button 
@@ -43,18 +49,6 @@ const Sidebar = ({ expanded, onToggle }: SidebarProps) => {
                         <TbChevronRight className={`w-5 h-5 transition-transform ${!expanded && 'rotate-180'}`} />
                     </button>
                 </div>
-
-                {/* Search (only visible when expanded) */}
-                {expanded && (
-                    <div className="relative mb-6 mx-2">
-                        <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                        <input
-                        type="text"
-                        placeholder="Search..."
-                        className="w-full pl-10 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
-                        />
-                    </div>
-                )}
 
                 {/* Navigation */}
                 <nav className="flex-1">
@@ -71,8 +65,42 @@ const Sidebar = ({ expanded, onToggle }: SidebarProps) => {
                                 }
                                 end
                             >
+                                <BiHomeSmile className='w-5 h-5 flex-shrink-0' />
+                                {expanded && <span className="ml-3">Home</span>}
+                            </NavLink>
+                        </li>
+                        
+                        <li>
+                            <NavLink 
+                                to="/dashboard"
+                                className={({ isActive }) => 
+                                `flex items-center rounded-lg p-3 text-sm font-medium transition-colors ${
+                                    isActive 
+                                    ? "bg-blue-500/10 text-blue-600" 
+                                    : "text-gray-600 hover:bg-gray-100 hover:text-blue-600"
+                                }`
+                                }
+                                end
+                            >
                                 <TbLayoutDashboardFilled className='w-5 h-5 flex-shrink-0' />
                                 {expanded && <span className="ml-3">Dashboard</span>}
+                            </NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink 
+                                to="/wallet"
+                                className={({ isActive }) => 
+                                `flex items-center rounded-lg p-3 text-sm font-medium transition-colors ${
+                                    isActive 
+                                    ? "bg-blue-500/10 text-blue-600" 
+                                    : "text-gray-600 hover:bg-gray-100 hover:text-blue-600"
+                                }`
+                                }
+                                end
+                            >
+                                <BiWallet className='w-5 h-5 flex-shrink-0' />
+                                {expanded && <span className="ml-3">Wallet</span>}
                             </NavLink>
                         </li>
 
@@ -94,7 +122,7 @@ const Sidebar = ({ expanded, onToggle }: SidebarProps) => {
 
                         <li>
                             <NavLink 
-                                to="/wishlist"
+                                to="/watchlist"
                                 className={({ isActive }) => 
                                 `flex items-center rounded-lg p-3 text-sm font-medium transition-colors ${
                                     isActive 
@@ -103,11 +131,11 @@ const Sidebar = ({ expanded, onToggle }: SidebarProps) => {
                                 }`
                                 }
                             >
-                                <GrFavorite className='w-5 h-5 flex-shrink-0' />
-                                {expanded && <span className="ml-3">Wishlist</span>}
+                                <TiHeartOutline className='w-5 h-5 flex-shrink-0' />
+                                {expanded && <span className="ml-3">Watchlist</span>}
                                 {expanded && (
                                 <span className="ml-auto px-2 py-0.5 text-xs font-medium bg-blue-500 text-white rounded-full">
-                                    3
+                                    {watchlistCount}
                                 </span>
                                 )}
                             </NavLink>
@@ -196,7 +224,7 @@ const Sidebar = ({ expanded, onToggle }: SidebarProps) => {
 
 
                 {/* User Profile */}
-                <div className={`mt-auto flex items-center p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors ${
+                <div className={`mt-auto flex items-center border-t-2 border-indigo-400 p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors ${
                     !expanded ? 'justify-center' : ''
                     }`}>
                     <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">

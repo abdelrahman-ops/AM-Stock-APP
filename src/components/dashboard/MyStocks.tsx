@@ -7,9 +7,9 @@ const MyStocks = () => {
     const navigate = useNavigate();
     
     return (
-        <div className="w-full p-6 bg-white rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)]">
+        <div className="w-full rounded-2xl">
             <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-semibold text-gray-900">My Stocks</h1>
+                <h1 className="text-2xl font-semibold text-gray-900 font-mono">My Stocks</h1>
                 <button 
                     onClick={() => navigate('/portfolio')}
                     className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-[#6425FE] hover:bg-[#6425FE]/10 rounded-lg transition-colors"
