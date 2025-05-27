@@ -225,3 +225,16 @@ button:focus-visible {
 .rounded-lg {
   border-radius: 0.5rem;
 }
+
+/* Ensure the main content is properly positioned */
+/* main {
+  margin-top: 64px;
+}
+
+
+@media (max-width: 768px) {
+  .sidebar-container {
+    top: 64px;
+    height: calc(100vh - 64px); 
+  }
+} */
