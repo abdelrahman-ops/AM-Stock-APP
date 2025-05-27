@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { FiBarChart2 } from 'react-icons/fi'
 
 const NoDataDisplay = () => {

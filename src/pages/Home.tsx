@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import { FiArrowUpRight, FiTrendingUp, FiShield, FiPieChart, FiDollarSign, FiBarChart2 } from 'react-icons/fi';
 import { FaRegLightbulb, FaRegHandshake } from 'react-icons/fa';

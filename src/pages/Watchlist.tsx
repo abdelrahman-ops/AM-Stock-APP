@@ -4,11 +4,11 @@ import { motion } from 'framer-motion';
 import { useWatchlistStore } from '../stores/watchlistStore';
 import type { WatchlistItem } from '../types/watchlist';
 import { useEffect, useState } from 'react';
-import { useDemoModeStore } from '../../draft/demoModeStore';
+
 
 export const Watchlist = () => {
     const { watchlist, getWatchlistCount } = useWatchlistStore();
-    const { isDemoMode } = useDemoModeStore();
+    const isDemoMode  = true;
     const [isHydrated, setIsHydrated] = useState(false);
     const [forceWatchlist, setForceWatchlist] = useState<WatchlistItem[]>([]);
 
