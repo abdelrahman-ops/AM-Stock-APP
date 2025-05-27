@@ -1,6 +1,4 @@
-import { FiStar } from "react-icons/fi";
 
-// FilterTabs.tsx
 interface FilterTabsProps {
     activeFilter: string;
     setActiveFilter: (filter: string) => void;
@@ -12,7 +10,6 @@ export function FilterTabs({ activeFilter, setActiveFilter }: FilterTabsProps) {
         { id: 'gainers', label: 'Top Gainers' },
         { id: 'losers', label: 'Top Losers' },
         { id: 'active', label: 'Most Active' },
-        { id: 'watchlist', label: 'My Watchlist', icon: <FiStar size={14} /> }
     ];
 
     return (
@@ -28,7 +25,7 @@ export function FilterTabs({ activeFilter, setActiveFilter }: FilterTabsProps) {
                     : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'
                 }`}
             >
-                {tab.icon && <span className="mr-1">{tab.icon}</span>}
+                
                 {tab.label}
             </button>
             ))}

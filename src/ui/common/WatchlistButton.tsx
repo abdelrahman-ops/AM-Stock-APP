@@ -1,55 +1,48 @@
 import { FiStar } from 'react-icons/fi';
-import { useWatchlist } from '../../context/WatchlistContext';
-import { useEffect, useState } from 'react';
+import { useWatchlistStore } from '../../stores/watchlistStore';
+import { useCallback } from 'react';
 
 interface WatchlistButtonProps {
   symbol: string;
 }
 
 export const WatchlistButton: React.FC<WatchlistButtonProps> = ({ symbol }) => {
-  const { 
-    isInWatchlist, 
-    addToWatchlist, 
-    removeFromWatchlist 
-  } = useWatchlist();
-  const [isWatched, setIsWatched] = useState(false);
-
-  // Sync with context state
-  useEffect(() => {
-    setIsWatched(isInWatchlist(symbol));
-  }, [isInWatchlist, symbol]);
+  // Use Zustand selectors to get only what we need
+  const isInWatchlist = useWatchlistStore(useCallback(
+    (state) => state.isInWatchlist(symbol),
+    [symbol]
+  ));
+  
+  const addToWatchlist = useWatchlistStore((state) => state.addToWatchlist);
+  const removeFromWatchlist = useWatchlistStore((state) => state.removeFromWatchlist);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (isWatched) {
-      removeFromWatchlist(symbol)
-        .then(() => setIsWatched(false))
-        .catch(err => console.error("Failed to remove:", err));
+    if (isInWatchlist) {
+      removeFromWatchlist(symbol);
     } else {
-      addToWatchlist(symbol)
-        .then(() => setIsWatched(true))
-        .catch(err => console.error("Failed to add:", err));
+      addToWatchlist(symbol);
     }
   };
 
   return (
     <button
-      onClick={handleClick}
-      className={`p-2 rounded-full transition-colors ${
-        isWatched 
-          ? 'text-yellow-500 fill-yellow-500 hover:bg-yellow-50' 
-          : 'text-gray-400 hover:text-yellow-500 hover:bg-gray-100'
-      }`}
-      aria-label={isWatched ? 'Remove from watchlist' : 'Add to watchlist'}
-    >
-      <FiStar 
-        className={`w-5 h-5 transition-colors 
-          ${
-        isWatched 
-          ? 'text-yellow-500 fill-yellow-500 hover:bg-yellow-50' 
-          : 'text-gray-400 hover:text-yellow-500 hover:bg-gray-100'
-      }`}
-      />
-    </button>
+  onClick={handleClick}
+  className={`
+    p-2 rounded-full transition-colors duration-200
+    ${isInWatchlist 
+      ? 'text-yellow-500 hover:bg-yellow-50' 
+      : 'text-gray-400 hover:text-yellow-500 hover:bg-gray-100'
+    }
+  `}
+  aria-label={isInWatchlist ? 'Remove from watchlist' : 'Add to watchlist'}
+>
+  <FiStar
+    className={`
+      w-5 h-5 transition-all duration-200
+      ${isInWatchlist ? 'fill-current scale-110' : 'scale-100'}
+    `}
+  />
+</button>
   );
 };

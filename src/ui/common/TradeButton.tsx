@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useDemoTrading } from '../../context/DemoTradingContext';
 import { Dialog } from '@headlessui/react';
+import { useTradingStore } from '../../../draft/tradingStore';
 
 interface TradeButtonProps {
   stock: {
@@ -14,7 +14,7 @@ interface TradeButtonProps {
 export const TradeButton: React.FC<TradeButtonProps> = ({ stock, type, ownedQuantity = 0 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const { buyStock, sellStock } = useDemoTrading();
+  const { buyStock, sellStock } = useTradingStore();
 
   const handleTrade = () => {
     try {

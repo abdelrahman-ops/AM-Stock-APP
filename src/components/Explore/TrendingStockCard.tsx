@@ -1,39 +1,40 @@
 import { useNavigate } from "react-router-dom";
-import { useDemoMode } from "../../context/DemoModeContext";
-import { useTrading } from '../../context/TradingContext';
-import { Tooltip } from "../../ui/common/Tooltip";
-import { WatchlistButton } from "../../ui/common/WatchlistButton";
 import type { Stock } from "../../types/stock";
+import { WatchlistButton } from "../../ui/common/WatchlistButton";
+import { Tooltip } from "../../ui/common/Tooltip";
+
 
 interface TrendingStockCardProps {
   stock: Stock;
   rank: number;
+  portfolioItem?: {
+    quantity: number;
+  };
 }
 
-const TrendingStockCard = ({ stock, rank }: TrendingStockCardProps) => {
+export const TrendingStockCard = ({ 
+  stock, 
+  rank, 
+  portfolioItem 
+}: TrendingStockCardProps) => {
   const navigate = useNavigate();
-  const { isDemoMode } = useDemoMode();
-  const { getPortfolioItem } = useTrading();
+  const isDemoMode = true;
 
   const isPositive = stock.percentChange >= 0;
-  const truncatedName = stock.name.length > 20 ? `${stock.name.substring(0, 20)}...` : stock.name;
-  const portfolioItem = getPortfolioItem(stock.symbol);
-
+  const truncatedName = stock.name.length > 20 
+    ? `${stock.name.substring(0, 20)}...` 
+    : stock.name;
+  
   const handleCardClick = () => {
     navigate(`/buy/${stock.symbol}`, {
-      state: { 
-        demoMode: isDemoMode,
-        stockData: stock 
-      }
+      state: { stockData: stock }
     });
   };
 
   return (
     <div 
       onClick={handleCardClick}
-      className={`group relative bg-white rounded-lg border border-gray-100 p-4 hover:shadow-md transition-all duration-200 h-full flex flex-col cursor-pointer hover:border-gray-200 ${
-        isDemoMode ? 'bg-gray-50' : ''
-      }`}
+      className="group relative bg-white rounded-lg border border-gray-100 p-4 hover:shadow-md transition-all duration-200 h-full flex flex-col cursor-pointer hover:border-gray-200"
     >
       <div className="flex justify-between items-start gap-2 mb-3">
         {/* Rank indicator */}
@@ -93,5 +94,3 @@ const TrendingStockCard = ({ stock, rank }: TrendingStockCardProps) => {
     </div>
   );
 };
-
-export default TrendingStockCard;

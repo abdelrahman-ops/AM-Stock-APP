@@ -1,4 +1,3 @@
-// src/pages/ExploreStocks.tsx
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -10,7 +9,7 @@ import type { Stock } from "../types/stock";
 
 import SectionHeader from "../components/Explore/SectionHeader";
 import { MarketHeader } from "../components/Explore/MarketHeader";
-import TrendingStockCard from "../components/Explore/TrendingStockCard";
+import { TrendingStockCard } from "../components/Explore/TrendingStockCard";
 import { FilterTabs } from "../components/Explore/FilterTabs";
 import MarketOverviewCards from "../components/Explore/MarketOverviewCards";
 import StocksDisplay from "../components/Explore/StocksDisplay";
@@ -69,7 +68,6 @@ export default function ExploreStocks() {
             
             <TrendingStocksSection 
                 stocks={stocks}
-                onWatchlistAdd={handleAddToWatchlist}
             />
 
             <FilterTabs 
@@ -92,8 +90,11 @@ export default function ExploreStocks() {
     );
 }
 
-    // Helper component for trending stocks section
-    function TrendingStocksSection({ stocks, onWatchlistAdd }: { stocks: Stock[], onWatchlistAdd: (symbol: string) => void }) {
+interface TrendingStocksSectionProps {
+    stocks: Stock[];
+}
+
+function TrendingStocksSection({ stocks }: TrendingStocksSectionProps) {
     const trendingStocks = [...stocks]
         .sort((a, b) => b.volume - a.volume)
         .slice(0, 3);
@@ -110,7 +111,6 @@ export default function ExploreStocks() {
                     <TrendingStockCard 
                         stock={stock} 
                         rank={index + 1}
-                        onWatchlistAdd={onWatchlistAdd}
                     />
                 </motion.div>
             ))}

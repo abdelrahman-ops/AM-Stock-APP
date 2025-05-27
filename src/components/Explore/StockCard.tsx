@@ -1,10 +1,24 @@
 import { FiArrowUpRight, FiTrendingUp, FiTrendingDown } from "react-icons/fi";
 import { WatchlistButton } from "../../ui/common/WatchlistButton";
-import { useDemoMode } from "../../context/DemoModeContext";
 import { motion } from "framer-motion";
 
+interface Stock {
+  symbol: string;
+  name: string;
+  price: number;
+  change: number;
+  percentChange: number;
+  volume: number;
+  high: number;
+  low: number;
+}
+
+interface StockCardProps {
+  stock: Stock;
+  onTradeClick?: (symbol: string) => void;
+}
+
 const StockCard = ({ stock, onTradeClick }: StockCardProps) => {
-  const { isDemoMode } = useDemoMode();
   const isPositive = stock.change >= 0;
   const trendIcon = isPositive ? 
     <FiTrendingUp className="text-green-500" /> : 
@@ -41,15 +55,8 @@ const StockCard = ({ stock, onTradeClick }: StockCardProps) => {
         </div>
         
         <div className="flex items-center gap-2">
-          {isDemoMode && (
-            <span className="text-[10px] font-medium bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded-full">
-              DEMO
-            </span>
-          )}
           <WatchlistButton 
             symbol={stock.symbol}
-            className="text-gray-300 hover:text-yellow-500 transition-colors"
-            iconSize={16}
           />
         </div>
       </div>
