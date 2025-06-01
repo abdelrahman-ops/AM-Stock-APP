@@ -1,8 +1,9 @@
 import { FiArrowUpRight, FiTrendingUp, FiTrendingDown } from "react-icons/fi";
-import { WatchlistButton } from "../../ui/common/WatchlistButton";
+import { WatchlistButton } from "../shared/WatchlistButton";
 import { motion } from "framer-motion";
 
 interface Stock {
+  id: number;
   symbol: string;
   name: string;
   price: number;

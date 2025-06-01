@@ -2,11 +2,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import StockCard from "./StockCard";
 import StocksTable from "./StocksTable";
-import type { Stock } from "../../types/stock";
+import type { StockItem } from "../../types/stock";
 
 interface StocksDisplayProps {
   viewMode: 'cards' | 'table';
-  stocks: Stock[];
+  stocks: StockItem[];
   onWatchlistAdd: (symbol: string) => void;
 }
 
@@ -24,8 +24,8 @@ export default function StocksDisplay({ viewMode, stocks, onWatchlistAdd }: Stoc
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {stocks.map((stock) => (
               <StockCard 
-                key={stock._id}
-                stock={stock}
+                key={stock.id}
+                
               />
             ))}
           </div>

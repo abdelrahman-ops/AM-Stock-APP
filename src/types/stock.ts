@@ -21,13 +21,38 @@ export interface StockCardProps {
   onDetailsClick?: (symbol: string) => void;
 }
 
+// export interface StockItem {
+//   // id: number,
+//   // name: string;
+//   // ticker: string;
+//   // price: number;
+//   // change: number;
+//   // logo?: string;
+//   // trendData?: number[];
+//   // chart?: string;
+// }
+
 export interface StockItem {
-  id: number,
-  companyName: string;
-  ticker: string;
+  id: number;
+  symbol: string;
+  name: string;
   price: number;
   change: number;
-  logo?: string;
+  percentChange?: number;
+  volume?: number;
+  marketCap: number;
+  peRatio: number;
+  dividendYield: number;
+  sector: string;
+  high?: number;
+  low?: number;
+  ticker: string;
+  exchange?: string;
   trendData?: number[];
-  chart?: string;
+  logo: string;
+  chart: string;
+  isFavorite?: boolean;
 }
+
+export type ViewMode = 'cards' | 'table';
+export type FilterType = 'all' | 'gainers' | 'losers' | 'active' | 'favorites';

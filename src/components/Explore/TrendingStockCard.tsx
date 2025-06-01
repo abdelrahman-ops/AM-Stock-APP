@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import type { Stock } from "../../types/stock";
-import { WatchlistButton } from "../../ui/common/WatchlistButton";
-import { Tooltip } from "../../ui/common/Tooltip";
+import { WatchlistButton } from "../shared/WatchlistButton";
+import { Tooltip } from "../shared/Tooltip";
 
 
 interface TrendingStockCardProps {

@@ -1,4 +1,4 @@
-import PortfolioSummary from "../components/dashboard/PortfolioSummary";
+import PortfolioSummary from "../components/portfolio/PortfolioSummary";
 import MyStocks from "../components/dashboard/MyStocks";
 import { QuickActions } from "../components/dashboard/QuickActions";
 import StockDashboard from "../components/dashboard/StockDashboard";

@@ -11,8 +11,19 @@ import {
   Bar,
 } from 'recharts';
 
+interface StockData {
+  open: string;
+  high: string;
+  low: string;
+  close: string;
+  fifty_two_week: {
+    high: string;
+    low: string;
+  };
+}
+
 interface StockChartProps {
-  stock: any;
+  stock: StockData;
   library: 'chartjs' | 'recharts';
   chartType: 'price' | 'performance';
 }
