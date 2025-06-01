@@ -23,5 +23,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "draft/context", "draft/tradingStore.ts", "draft/demoModeStore.ts", "draft/DemoModeRouter.tsx", "draft/DemoToggle.tsx", "draft/DemoBanner.tsx", "draft/DemoWelcome.tsx", "draft/PortfolioOverview.tsx", "draft/TradeButton.tsx", "draft/features", "draft/data", "draft/stockService.ts", "draft/ExploreStocks.tsx", "draft/MarketOverviewCards.tsx", "draft/Home.tsx", "draft/Portfolio.tsx", "draft/StockDetail.tsx"]
+  "include": ["src"]
 }
